@@ -5,6 +5,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { useAuth } from '../utils/context/authContext';
+import { signOut } from '../utils/auth';
 
 const Profile = () => {
   const { user } = useAuth(); // retrieves user object from the useAuth hook
@@ -44,7 +45,7 @@ const Profile = () => {
         <h1>{user.name}</h1>
         <h4>{user.username}</h4>
         <p>{user.bio}</p>
-        <Button
+        {/* <Button
           onClick={() => {
             router.push(`/profile/${user.id}`);
           }}
@@ -53,7 +54,7 @@ const Profile = () => {
           }}
         >
           Edit Profile
-        </Button>
+        </Button> */}
         <Button
           onClick={() => {
             router.push('/products/new');
@@ -65,9 +66,14 @@ const Profile = () => {
           Create Event
         </Button>
       </div>
+      <div>
+        <Button variant="danger" onClick={signOut} style={{ fontSize: '10px', marginTop: '20px' }}>
+          Sign Out
+        </Button>
+      </div>
 
       <div>
-        <h2 style={{ marginTop: '50px' }}>Your Events</h2>
+        <h2 style={{ marginTop: '20px' }}>Your Events</h2>
       </div>
 
       {/* <div className="text-center my-4" id="products-section">
