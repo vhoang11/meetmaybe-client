@@ -1,24 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import { useRouter } from 'next/router';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { useAuth } from '../utils/context/authContext';
 import { signOut } from '../utils/auth';
+import { getMyEvents } from '../utils/data/eventData';
+import EventCard from '../components/events/EventCard';
 
 const Profile = () => {
   const { user } = useAuth(); // retrieves user object from the useAuth hook
   const router = useRouter();
-  //   const [sellerProducts, setSellerProducts] = useState([]);
+  const [events, setEvents] = useState([]);
 
-  //   const displayProducts = () => {
-  //     getProductsBySellerId(user.sellerId).then((data) => setSellerProducts(data));
-  //   };
+  const displayEvents = () => {
+    getMyEvents(user.uid).then((data) => setEvents(data));
+  };
 
-  //   useEffect(() => {
-  //     displayProducts();
-  //   }, [user]);
+  useEffect(() => {
+    displayEvents();
+  }, [user]);
 
   return (
     <div
@@ -57,7 +59,7 @@ const Profile = () => {
         </Button> */}
         <Button
           onClick={() => {
-            router.push('/products/new');
+            router.push('/events/new');
           }}
           style={{
             backgroundColor: '#6699CC', fontSize: '10px', width: '100px',
@@ -76,22 +78,22 @@ const Profile = () => {
         <h2 style={{ marginTop: '20px' }}>Your Events</h2>
       </div>
 
-      {/* <div className="text-center my-4" id="products-section">
-        {sellerProducts.map((product) => (
-          <section key={`product--${product.id}`} className="product">
-            <ProductCard
-              id={product.id}
-              sellerId={product.seller_id}
-              title={product.title}
-              description={product.description}
-              image_url={product.image_url}
-              price={product.price}
-              createdOn={product.createdOn}
-              onUpdate={displayProducts}
+      <div className="text-center my-4" id="events-section">
+        {events.map((event) => (
+          <section key={`event--${event.id}`} className="event">
+            <EventCard
+              id={event.id}
+              title={event.title}
+              description={event.description}
+              location={event.location}
+              image_url={event.image_url}
+              date={event.date}
+              time={event.time}
+              onUpdate={displayEvents}
             />
           </section>
         ))}
-      </div> */}
+      </div>
 
     </div>
   );
