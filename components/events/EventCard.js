@@ -16,7 +16,7 @@ const EventCard = ({
   location,
   date,
   time,
-  organizer,
+  // organizer,
   //   public,
   //   canceled,
 //   onUpdate,
@@ -32,7 +32,7 @@ const EventCard = ({
   //   };
   const router = useRouter();
   return (
-    <Card className="text-center" style={{ width: '300px' }}>
+    <Card className="text-center" style={{ width: '300px', marginBottom: '20px' }}>
       <Card.Header>Event: {title}</Card.Header>
       <Card.Body>
         <div>
@@ -40,15 +40,15 @@ const EventCard = ({
             src={image_url}
             alt={title}
             style={{
-              width: '200px', borderRadius: '50%', marginBottom: '20px', marginTop: '20px',
+              width: '200px', borderRadius: '50%', marginBottom: '10px',
             }}
           />
         </div>
-        <Card.Text>{description}</Card.Text>
-        <Card.Text>Organizer: {organizer}</Card.Text>
-        <Card.Text>Location: {location}</Card.Text>
-        <Card.Text>Date: {date}</Card.Text>
-        <Card.Text>Time: {time}</Card.Text>
+        <Card.Text style={{ margin: '5px', fontSize: '12px' }}>Description: {description}</Card.Text>
+        {/* <Card.Text>Organizer: {organizer}</Card.Text> */}
+        <Card.Text style={{ margin: '5px', fontSize: '12px' }}>Location: {location}</Card.Text>
+        <Card.Text style={{ margin: '5px', fontSize: '12px' }}>Date: {date}</Card.Text>
+        <Card.Text style={{ margin: '5px', fontSize: '12px' }}>Time: {time}</Card.Text>
       </Card.Body>
       <Button
         onClick={() => {
@@ -93,7 +93,7 @@ EventCard.propTypes = {
   image_url: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
-  organizer: PropTypes.string.isRequired,
+  // organizer: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
 //   onUpdate: PropTypes.func.isRequired,

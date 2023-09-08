@@ -30,7 +30,7 @@ export default function NavBar() {
         <Link passHref href="/events/new">
           <Nav.Link><IoIosAddCircle size={25} /></Nav.Link>
         </Link>
-        <Link passHref href="/">
+        <Link passHref href="/calendar">
           <Nav.Link><SlCalender size={25} /></Nav.Link>
         </Link>
         <Link passHref href="/profile">

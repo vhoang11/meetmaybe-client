@@ -47,6 +47,10 @@ function Home() {
           </section>
         ))}
       </div>
+
+      <div>
+        <h2 style={{ marginTop: '20px' }}>Public Events</h2>
+      </div>
     </div>
   );
 }

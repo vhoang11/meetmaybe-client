@@ -18,8 +18,8 @@ const initialState = {
   location: '',
   date: '',
   time: '',
-  public: false,
-  canceled: false,
+  public: '',
+  canceled: '',
 };
 
 const EventForm = ({ obj }) => {
@@ -49,12 +49,18 @@ const EventForm = ({ obj }) => {
   //   }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCurrentEvent((prevState) => ({
-      ...prevState,
-      [name]: value,
+    const {
+      name, value, type, checked,
+    } = e.target;
+
+    const newValue = type === 'checkbox' ? checked : value;
+
+    setCurrentEvent((prevFormData) => ({
+      ...prevFormData,
+      [name]: newValue,
     }));
   };
+
   const handleSubmit = (e) => {
     // Prevent form from being submitted
     e.preventDefault();
@@ -87,8 +93,6 @@ const EventForm = ({ obj }) => {
       };
       createEvent(event)
         .then((newEvent) => router.push(`/events/${newEvent.id}`));
-      // createProduct(currentRecord)
-      //   .then((product) => router.push(`/products/${product.id}`));
     }
   };
 

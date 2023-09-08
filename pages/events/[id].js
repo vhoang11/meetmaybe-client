@@ -21,7 +21,7 @@ function EventDetails() {
   }, [id]);
   console.warn(event);
   const deleteThisevent = () => {
-    if (window.confirm('Delete your Post?')) {
+    if (window.confirm('Delete your Event?')) {
       deleteEvent(id).then(() => router.push('/events'));
     }
   };
@@ -36,9 +36,15 @@ function EventDetails() {
           Title: {event.title}
         </h2>
         <hr />
+        <h5 style={{
+          marginTop: '20px', marginBottom: '20px', color: 'red', fontStyle: 'bold',
+        }}
+        >{event.canceled === true ? 'Canceled' : '' }
+        </h5>
         {/* <h4 style={{ marginTop: '20px', marginBottom: '20px' }}>Organizer: ${event.organizer.name}</h4> */}
         <h4 style={{ marginTop: '20px', marginBottom: '20px' }}>Date: {event.date}</h4>
         <h4 style={{ marginTop: '20px', marginBottom: '20px' }}>Time: {event.time}</h4>
+        <h5 style={{ marginTop: '20px', marginBottom: '20px' }}>{event.public === true ? 'Public' : '' }</h5>
         <p style={{ marginTop: '10px', marginBottom: '10px' }}>{event.description}</p>
 
         {organizer === user.id
