@@ -3,7 +3,7 @@ import { clientCredentials } from '../client';
 const endpoint = clientCredentials.databaseURL;
 
 const getUsers = () => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/users`, {
+  fetch(`${clientCredentials.databaseURL}/attendees`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ const getUsers = () => new Promise((resolve, reject) => {
 });
 
 const getSingleUser = (id) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/users/${id}`, {
+  fetch(`${clientCredentials.databaseURL}/attendees/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

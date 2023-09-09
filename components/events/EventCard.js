@@ -12,14 +12,12 @@ const EventCard = ({
   id,
   title,
   image_url,
-  description,
-  location,
   date,
   time,
   // organizer,
   //   public,
   //   canceled,
-//   onUpdate,
+  // onUpdate,
 }) => {
 //   const { user } = useAuth();
 
@@ -32,7 +30,7 @@ const EventCard = ({
   //   };
   const router = useRouter();
   return (
-    <Card className="text-center" style={{ width: '300px', marginBottom: '20px' }}>
+    <Card className="text-center" style={{ width: '300px', marginBottom: '20px', height: '375px' }}>
       <Card.Header>Event: {title}</Card.Header>
       <Card.Body>
         <div>
@@ -40,21 +38,20 @@ const EventCard = ({
             src={image_url}
             alt={title}
             style={{
-              width: '200px', borderRadius: '50%', marginBottom: '10px',
+              width: '200px', marginBottom: '10px',
             }}
           />
         </div>
-        <Card.Text style={{ margin: '5px', fontSize: '12px' }}>Description: {description}</Card.Text>
-        {/* <Card.Text>Organizer: {organizer}</Card.Text> */}
-        <Card.Text style={{ margin: '5px', fontSize: '12px' }}>Location: {location}</Card.Text>
         <Card.Text style={{ margin: '5px', fontSize: '12px' }}>Date: {date}</Card.Text>
-        <Card.Text style={{ margin: '5px', fontSize: '12px' }}>Time: {time}</Card.Text>
+        <Card.Text style={{ marginTop: '5px', fontSize: '12px' }}>Time: {time}</Card.Text>
       </Card.Body>
       <Button
         onClick={() => {
           router.push(`/events/${id}`);
         }}
-        style={{ margin: '10px', backgroundColor: '#6699CC' }}
+        style={{
+          marginLeft: '10px', marginRight: '10px', marginBottom: '10px', backgroundColor: '#6699CC', fontSize: '10px',
+        }}
       >
         View Event
       </Button>
@@ -91,8 +88,6 @@ EventCard.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   image_url: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  location: PropTypes.string.isRequired,
   // organizer: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,

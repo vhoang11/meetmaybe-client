@@ -28,6 +28,30 @@ const getMyEvents = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getPublicEvents = () => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/events?public=true`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
+const getEvents = () => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/events`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
 const getSingleEvent = (id) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/events/${id}`, {
     method: 'GET',
@@ -85,5 +109,5 @@ const leaveEvent = (eventId, uid) => fetch(`http://localhost:8000/events/${event
 
 // eslint-disable-next-line import/prefer-default-export
 export {
-  createEvent, getMyEvents, getSingleEvent, updateEvent, deleteEvent, joinEvent, leaveEvent,
+  createEvent, getMyEvents, getPublicEvents, getEvents, getSingleEvent, updateEvent, deleteEvent, joinEvent, leaveEvent,
 };

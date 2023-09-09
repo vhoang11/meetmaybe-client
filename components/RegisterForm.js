@@ -8,6 +8,7 @@ function RegisterForm({ user, updateUser }) {
   const [formData, setFormData] = useState({
     name: '',
     username: '',
+    email: '',
     profile_image_url: '',
     bio: '',
     uid: user.uid,
@@ -57,6 +58,16 @@ function RegisterForm({ user, updateUser }) {
           name="username"
           required
           value={formData.username}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Email</Form.Label>
+        <Form.Control
+          name="email"
+          required
+          value={formData.email}
           onChange={handleInputChange}
         />
       </Form.Group>

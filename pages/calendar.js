@@ -70,12 +70,15 @@ function App() {
 
   return (
     <div className="App" style={{ textAlign: 'center' }}>
-      <h3>Calendar</h3>
+      <h3 style={{ marginTop: '20px' }}>Calendar</h3>
       <h5>Add New Event</h5>
       <div>
         <input type="text" placeholder="Add Title" style={{ width: '20%', marginRight: '10px' }} value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
+
         <DatePicker placeholderText="Start Date" style={{ marginRight: '10px' }} selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
+
         <DatePicker placeholderText="End Date" selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
+
         <button type="button" style={{ marginTop: '10px' }} onClick={handleAddEvent}>
           Add Event
         </button>
