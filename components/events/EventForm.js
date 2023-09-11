@@ -9,22 +9,24 @@ import { Button, Form } from 'react-bootstrap';
 
 import { useAuth } from '../../utils/context/authContext';
 import { createEvent, updateEvent } from '../../utils/data/eventData';
+import { getUsers } from '../../utils/data/userData';
 // import 'react-datepicker/dist/react-datepicker.css';
 
 const initialState = {
   title: '',
   image_url: '',
   description: '',
+  invitee: '',
   location: '',
   date: '',
   time: '',
-  public: false,
+  is_public: false,
   canceled: false,
 };
 
 const EventForm = ({ obj }) => {
   const [currentEvent, setCurrentEvent] = useState(initialState);
-  //   const [selectedDate, setSelectedDate] = useState(null);
+  const [invited, setInvited] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
@@ -35,26 +37,33 @@ const EventForm = ({ obj }) => {
         title: obj.title,
         image_url: obj.image_url,
         description: obj.description,
+        invitee: obj.invitee,
         location: obj.location,
         date: obj.date,
         time: obj.time,
-        public: obj.public,
+        is_public: obj.is_public,
         canceled: obj.canceled,
       });
     }
   }, [obj, user]);
 
-  //   useEffect(() => {
-  //     getCategories().then(setCategories);
-  //   }, []);
+  useEffect(() => {
+    getUsers().then(setInvited);
+  }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCurrentEvent((prevState) => ({
-      ...prevState,
-      [name]: value,
+    const {
+      name, value, type, checked,
+    } = e.target;
+
+    const newValue = type === 'checkbox' ? checked : value;
+
+    setCurrentEvent((prevFormData) => ({
+      ...prevFormData,
+      [name]: newValue,
     }));
   };
+
   const handleSubmit = (e) => {
     // Prevent form from being submitted
     e.preventDefault();
@@ -64,11 +73,12 @@ const EventForm = ({ obj }) => {
         title: currentEvent.title,
         image_url: currentEvent.image_url,
         description: currentEvent.description,
+        invitee: currentEvent.invitee,
         location: currentEvent.location,
         date: currentEvent.date,
         time: currentEvent.time,
         organizer: user.id,
-        public: currentEvent.public,
+        is_public: currentEvent.is_public,
         canceled: currentEvent.canceled,
       };
       updateEvent(eventUpdate)
@@ -82,13 +92,12 @@ const EventForm = ({ obj }) => {
         date: currentEvent.date,
         time: currentEvent.time,
         organizer: user.id,
-        public: currentEvent.public,
+        invitee: currentEvent.invitee,
+        is_public: currentEvent.is_public,
         canceled: currentEvent.canceled,
       };
       createEvent(event)
         .then((newEvent) => router.push(`/events/${newEvent.id}`));
-      // createProduct(currentRecord)
-      //   .then((product) => router.push(`/products/${product.id}`));
     }
   };
 
@@ -99,7 +108,6 @@ const EventForm = ({ obj }) => {
         className="text-center d-flex flex-column justify-content-center align-content-center"
         style={{
           paddingTop: '100px',
-          maxWidth: '700px',
           margin: '0 auto',
         }}
       >
@@ -123,6 +131,7 @@ const EventForm = ({ obj }) => {
             required
             style={{ marginBottom: '30px' }}
           />
+
           <Form.Label>Description</Form.Label>
           <Form.Control
             type="text"
@@ -132,6 +141,22 @@ const EventForm = ({ obj }) => {
             onChange={handleChange}
             required
           />
+
+          <Form.Group className="mb-3">
+            <Form.Select aria-label="invitee" name="invitee" onChange={handleChange} required value={currentEvent.invitee}>
+              <option value="">Invitee</option>
+              {
+              invited.map((invitee) => (
+                <option
+                  key={invitee.id}
+                  value={invitee.id}
+                >
+                  {invitee.name}
+                </option>
+              ))
+            }
+            </Form.Select>
+          </Form.Group>
 
           <Form.Label>Location</Form.Label>
           <Form.Control
@@ -169,8 +194,8 @@ const EventForm = ({ obj }) => {
           <Form.Check
             className="text-grey mb-3"
             type="switch"
-            id="public"
-            name="public"
+            id="is_public"
+            name="is_public"
             label="Public Event"
             onChange={handleChange}
           />
@@ -187,7 +212,7 @@ const EventForm = ({ obj }) => {
           />
         </div>
 
-        <Button type="submit" style={{ backgroundColor: '#6699CC' }}>
+        <Button type="submit" style={{ backgroundColor: '#6699CC', marginBottom: '20px' }}>
           Submit
         </Button>
       </Form>
@@ -201,10 +226,11 @@ EventForm.propTypes = {
     title: PropTypes.string,
     image_url: PropTypes.string,
     description: PropTypes.string,
+    invitee: PropTypes.object,
     location: PropTypes.string,
     date: PropTypes.number,
     time: PropTypes.number,
-    public: PropTypes.bool,
+    is_public: PropTypes.bool,
     canceled: PropTypes.bool,
   }),
 };

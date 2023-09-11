@@ -24,13 +24,13 @@ export default function NavBar() {
         <Navbar.Collapse id="responsive-navbar-nav"> */}
         {/* <Nav className="me-auto"> */}
         {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-        <Link passHref href="/">
+        <Link passHref href="/search">
           <Nav.Link><SlMagnifier size={25} /></Nav.Link>
         </Link>
         <Link passHref href="/events/new">
           <Nav.Link><IoIosAddCircle size={25} /></Nav.Link>
         </Link>
-        <Link passHref href="/">
+        <Link passHref href="/calendar">
           <Nav.Link><SlCalender size={25} /></Nav.Link>
         </Link>
         <Link passHref href="/profile">

@@ -13,7 +13,7 @@ const NewEvent = () => (
     }}
   >
 
-    <h2>Create Event</h2>
+    <h2 style={{ marginTop: '75px' }}>Create Event</h2>
     <EventForm />
   </div>
 );
