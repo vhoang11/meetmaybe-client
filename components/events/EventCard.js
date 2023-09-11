@@ -5,8 +5,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Button, Card } from 'react-bootstrap';
+import { joinEvent, leaveEvent } from '../../utils/data/eventData';
+import { useAuth } from '../../utils/context/authContext';
 // import { useAuth } from '../../utils/context/authContext';
-// import { deleteEvent, joinEvent, leaveEvent } from '../../utils/data/eventData';
+// import { joinEvent, leaveEvent } from '../../utils/data/eventData';
 
 const EventCard = ({
   id,
@@ -14,23 +16,22 @@ const EventCard = ({
   image_url,
   date,
   time,
-  // organizer,
-  //   public,
-  //   canceled,
-  // onUpdate,
+  joined,
+  is_public,
+  onUpdate,
 }) => {
-//   const { user } = useAuth();
+  const { user } = useAuth();
 
-  //   const leave = () => leaveEvent(id, user.uid).then(() => onUpdate());
-  //   const join = () => joinEvent(id, user.uid).then(() => onUpdate());
-  //   const deleteThisEvent = () => {
-  //     if (window.confirm('Delete Event?')) {
-  //       deleteEvent(id).then(() => onUpdate());
-  //     }
-  //   };
+  const leave = () => leaveEvent(id, user.uid).then(() => onUpdate());
+  const join = () => joinEvent(id, user.uid).then(() => onUpdate());
+  // const deleteThisEvent = () => {
+  //   if (window.confirm('Delete Event?')) {
+  //     deleteEvent(id).then(() => onUpdate());
+  //   }
+  // };
   const router = useRouter();
   return (
-    <Card className="text-center" style={{ width: '300px', marginBottom: '20px', height: '375px' }}>
+    <Card className="text-center" style={{ width: '300px', marginBottom: '20px', height: '450px' }}>
       <Card.Header>Event: {title}</Card.Header>
       <Card.Body>
         <div>
@@ -55,31 +56,25 @@ const EventCard = ({
       >
         View Event
       </Button>
-      {/* <Button
-        onClick={deleteThisEvent}
-        style={{ margin: '10px', backgroundColor: '#6699CC' }}
-      >
-        Delete
-      </Button>
-      {
-        joined
-          ? (
-            <Button
-              className="btn-danger"
-              onClick={leave}
-              style={{ margin: '10px', backgroundColor: '#006400' }}
-            >Leave
-            </Button>
-          )
-          : (
-            <Button
-              className="btn-success"
-              onClick={join}
-              style={{ margin: '10px', backgroundColor: '#006400' }}
-            >Join
-            </Button>
-          )
-      } */}
+      {is_public === true && (
+        joined ? (
+          <Button
+            className="btn-danger"
+            onClick={leave}
+            style={{ margin: '10px', backgroundColor: '#006400' }}
+          >
+            Leave
+          </Button>
+        ) : (
+          <Button
+            className="btn-success"
+            onClick={join}
+            style={{ margin: '10px', backgroundColor: '#006400' }}
+          >
+            Join
+          </Button>
+        )
+      )}
     </Card>
   );
 };
@@ -91,8 +86,9 @@ EventCard.propTypes = {
   // organizer: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
-//   onUpdate: PropTypes.func.isRequired,
-//   joined: PropTypes.bool.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  joined: PropTypes.bool.isRequired,
+  is_public: PropTypes.bool.isRequired,
 };
 
 export default EventCard;

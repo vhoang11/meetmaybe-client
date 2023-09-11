@@ -16,7 +16,7 @@ const createEvent = (event) => new Promise((resolve, reject) => {
 });
 
 const getMyEvents = (uid) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/events`, {
+  fetch(`${clientCredentials.databaseURL}/events?uid=${uid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

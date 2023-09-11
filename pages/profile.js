@@ -15,7 +15,18 @@ const Profile = () => {
   const [events, setEvents] = useState([]);
 
   const displayEvents = () => {
-    getMyEvents(user.uid).then((data) => setEvents(data));
+    getMyEvents(user.uid).then((data) => {
+      // Filter events where the user is an attendee, organizer, or invitee
+      const userEvents = data.filter((event) => {
+        const attendees = event.attendees || []; // Ensure attendees is an array or an empty array
+        return (
+          attendees.some((attendee) => attendee.uid === user.uid)
+          || event.organizer.uid === user.uid
+          || event.invitee.uid === user.uid
+        );
+      });
+      setEvents(userEvents);
+    });
   };
 
   useEffect(() => {
@@ -45,9 +56,9 @@ const Profile = () => {
 
       <div style={{ marginTop: '5px' }}>
         <h1>{user.name}</h1>
-        <h4>{user.username}</h4>
+        <h4>@{user.username}</h4>
         <h4>{user.email}</h4>
-        <p>{user.bio}</p>
+        <p>Bio: {user.bio}</p>
         {/* <Button
           onClick={() => {
             router.push(`/profile/${user.id}`);
@@ -80,20 +91,35 @@ const Profile = () => {
       </div>
 
       <div className="text-center my-4" id="events-section">
-        {events.map((event) => (
-          <section key={`event--${event.id}`} className="event">
-            <EventCard
-              id={event.id}
-              title={event.title}
-              description={event.description}
-              location={event.location}
-              image_url={event.image_url}
-              date={event.date}
-              time={event.time}
-              onUpdate={displayEvents}
-            />
-          </section>
-        ))}
+        {events.length === 0 ? (
+          <p
+            style={{
+              textAlign: 'center',
+              marginTop: '50px',
+              backgroundColor: 'rgba(255,255,255, 0.5)',
+              padding: '50px',
+            }}
+          >
+            No Events
+          </p>
+        ) : (
+          <div>
+            {events.map((event) => (
+              <section key={`event--${event.id}`} className="event">
+                <EventCard
+                  id={event.id}
+                  title={event.title}
+                  description={event.description}
+                  location={event.location}
+                  image_url={event.image_url}
+                  date={event.date}
+                  time={event.time}
+                  onUpdate={displayEvents}
+                />
+              </section>
+            ))}
+          </div>
+        )}
       </div>
 
     </div>

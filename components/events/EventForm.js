@@ -20,7 +20,7 @@ const initialState = {
   location: '',
   date: '',
   time: '',
-  public: false,
+  is_public: false,
   canceled: false,
 };
 
@@ -41,7 +41,7 @@ const EventForm = ({ obj }) => {
         location: obj.location,
         date: obj.date,
         time: obj.time,
-        public: obj.public,
+        is_public: obj.is_public,
         canceled: obj.canceled,
       });
     }
@@ -50,10 +50,6 @@ const EventForm = ({ obj }) => {
   useEffect(() => {
     getUsers().then(setInvited);
   }, []);
-
-  //   useEffect(() => {
-  //     getCategories().then(setCategories);
-  //   }, []);
 
   const handleChange = (e) => {
     const {
@@ -82,7 +78,7 @@ const EventForm = ({ obj }) => {
         date: currentEvent.date,
         time: currentEvent.time,
         organizer: user.id,
-        public: currentEvent.public,
+        is_public: currentEvent.is_public,
         canceled: currentEvent.canceled,
       };
       updateEvent(eventUpdate)
@@ -97,7 +93,7 @@ const EventForm = ({ obj }) => {
         time: currentEvent.time,
         organizer: user.id,
         invitee: currentEvent.invitee,
-        public: currentEvent.public,
+        is_public: currentEvent.is_public,
         canceled: currentEvent.canceled,
       };
       createEvent(event)
@@ -198,8 +194,8 @@ const EventForm = ({ obj }) => {
           <Form.Check
             className="text-grey mb-3"
             type="switch"
-            id="public"
-            name="public"
+            id="is_public"
+            name="is_public"
             label="Public Event"
             onChange={handleChange}
           />
@@ -234,7 +230,7 @@ EventForm.propTypes = {
     location: PropTypes.string,
     date: PropTypes.number,
     time: PropTypes.number,
-    public: PropTypes.bool,
+    is_public: PropTypes.bool,
     canceled: PropTypes.bool,
   }),
 };
