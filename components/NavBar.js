@@ -11,19 +11,14 @@ import {
 import { BsPerson } from 'react-icons/bs';
 import { IoIosAddCircle } from 'react-icons/io';
 import { SlCalender, SlMagnifier } from 'react-icons/sl';
-// import { signOut } from '../utils/auth';
 
 export default function NavBar() {
   return (
-    <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary shadow-sm" id="navbar">
+    <Navbar className="bg-body-tertiary shadow-sm" id="navbar">
       <Container>
         <Link passHref href="/">
           <Navbar.Brand>MM</Navbar.Brand>
         </Link>
-        {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav"> */}
-        {/* <Nav className="me-auto"> */}
-        {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
         <Link passHref href="/search">
           <Nav.Link><SlMagnifier size={25} /></Nav.Link>
         </Link>

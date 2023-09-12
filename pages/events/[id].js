@@ -25,6 +25,7 @@ function EventDetails({ onUpdate }) {
     joinEvent(id, user.uid)
       .then((updatedEventData) => {
         setEvent(updatedEventData);
+        onUpdate();
       });
   };
 
@@ -44,8 +45,12 @@ function EventDetails({ onUpdate }) {
   }, [id]);
   console.warn(event);
 
-  useEffect(() => {
+  const displayAttendees = () => {
     getEventAttendees().then(setEventAttendees);
+  };
+
+  useEffect(() => {
+    displayAttendees();
   });
   console.warn(eventAttendees);
 
@@ -59,7 +64,7 @@ function EventDetails({ onUpdate }) {
     <div className="mt-5" id="event-page">
 
       <div className="d-flex flex-column">
-        <img src={event.image_url} alt={event.title} style={{ width: '30rem', margin: '60px' }} />
+        <img src={event.image_url} alt={event.title} style={{ width: '30rem', margin: '75px' }} />
       </div>
       <div className="text-grey ms-5 details" style={{ marginTop: '80px', width: '600px' }}>
         <h2>
@@ -137,7 +142,7 @@ function EventDetails({ onUpdate }) {
             <h4>Event Attendees:</h4>
             <ul>
               {eventAttendees.map((attendee) => (
-                <li key={attendee.id}>{attendee.name}</li>
+                <li key={attendee.id}>{attendee.attendee.name}</li>
               ))}
             </ul>
           </div>
