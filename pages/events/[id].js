@@ -2,41 +2,61 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react';
-// import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import { useAuth } from '../../utils/context/authContext';
 import {
   deleteEvent, getSingleEvent, joinEvent, leaveEvent,
 } from '../../utils/data/eventData';
 import { getSingleUser } from '../../utils/data/userData';
+import getEventAttendees from '../../utils/data/eventAttendeeData';
 
-function EventDetails(joined, onUpdate) {
+function EventDetails({ onUpdate }) {
   const [event, setEvent] = useState({});
   const [organizer, setOrganizer] = useState('');
   const [invitee, setInvited] = useState('');
+  const [eventAttendees, setEventAttendees] = useState([]);
   const router = useRouter();
   const { id } = router.query;
   const { user } = useAuth();
   const leave = () => leaveEvent(id, user.uid).then(() => onUpdate());
-  const join = () => joinEvent(id, user.uid).then(() => onUpdate());
+  const join = () => {
+    joinEvent(id, user.uid)
+      .then((updatedEventData) => {
+        setEvent(updatedEventData);
+      });
+  };
 
   useEffect(() => {
-    // Fetch event data
     getSingleEvent(id).then((eventData) => {
       setEvent(eventData);
       setOrganizer(user.id);
       getSingleUser(eventData.invitee.id).then(setInvited);
-    }, [id]);
-  });
+    });
+
+    // Fetch event attendees for public events
+    if (event.is_public) {
+      getEventAttendees(id).then((attendeesData) => {
+        setEventAttendees(attendeesData);
+      });
+    }
+  }, [id]);
   console.warn(event);
+
+  useEffect(() => {
+    getEventAttendees().then(setEventAttendees);
+  });
+  console.warn(eventAttendees);
+
   const deleteThisevent = () => {
     if (window.confirm('Delete your Event?')) {
       deleteEvent(id).then(() => router.push('/'));
     }
   };
+
   return (
-    <div className="mt-5 d-flex flex-wrap" id="event-page">
+    <div className="mt-5" id="event-page">
 
       <div className="d-flex flex-column">
         <img src={event.image_url} alt={event.title} style={{ width: '30rem', margin: '60px' }} />
@@ -45,7 +65,7 @@ function EventDetails(joined, onUpdate) {
         <h2>
           Title: {event.title}
         </h2>
-        <hr />
+        <hr style={{ width: '525px' }} />
         <h5 style={{
           marginTop: '20px', marginBottom: '20px', color: 'red', fontStyle: 'bold',
         }}
@@ -89,12 +109,15 @@ function EventDetails(joined, onUpdate) {
             </>
           ) : ''}
 
-        {event.is_public === true && (
-          joined ? (
+        {event.is_public && (
+        <>
+          {eventAttendees.some((attendee) => attendee.uid === user.uid) ? (
             <Button
               className="btn-danger"
               onClick={leave}
-              style={{ margin: '10px', backgroundColor: '#006400' }}
+              style={{
+                margin: '10px', backgroundColor: '#6699CC', fontSize: '10px', width: '90px',
+              }}
             >
               Leave
             </Button>
@@ -102,19 +125,31 @@ function EventDetails(joined, onUpdate) {
             <Button
               className="btn-success"
               onClick={join}
-              style={{ margin: '10px', backgroundColor: '#006400' }}
+              style={{
+                margin: '10px', backgroundColor: '#6699CC', fontSize: '10px', width: '90px',
+              }}
             >
               Join
             </Button>
-          )
+          )}
+          {/* Display event attendees */}
+          <div>
+            <h4>Event Attendees:</h4>
+            <ul>
+              {eventAttendees.map((attendee) => (
+                <li key={attendee.id}>{attendee.name}</li>
+              ))}
+            </ul>
+          </div>
+        </>
         )}
       </div>
     </div>
   );
 }
 
-// EventDetails.propTypes = {
-//   onUpdate: PropTypes.func.isRequired,
-// };
+EventDetails.propTypes = {
+  onUpdate: PropTypes.func.isRequired,
+};
 
 export default EventDetails;

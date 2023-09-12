@@ -31,7 +31,7 @@ const EventCard = ({
   // };
   const router = useRouter();
   return (
-    <Card className="text-center" style={{ width: '300px', marginBottom: '20px', height: '450px' }}>
+    <Card className="text-center" style={{ width: '300px', marginBottom: '20px', height: '400px' }}>
       <Card.Header>Event: {title}</Card.Header>
       <Card.Body>
         <div>
