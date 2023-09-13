@@ -20,13 +20,11 @@ function EventDetails({ onUpdate }) {
   const router = useRouter();
   const { id } = router.query;
   const { user } = useAuth();
-  const leave = () => leaveEvent(id, user.uid).then(() => onUpdate());
-  const join = () => {
-    joinEvent(id, user.uid)
-      .then((updatedEventData) => {
-        setEvent(updatedEventData);
-        onUpdate();
-      });
+
+  const updateEventAttendees = () => {
+    getEventAttendees(event.id).then((attendeesData) => {
+      setEventAttendees(attendeesData);
+    });
   };
 
   useEffect(() => {
@@ -38,21 +36,22 @@ function EventDetails({ onUpdate }) {
 
     // Fetch event attendees for public events
     if (event.is_public) {
-      getEventAttendees(id).then((attendeesData) => {
-        setEventAttendees(attendeesData);
-      });
+      updateEventAttendees();
     }
   }, [id]);
-  console.warn(event);
 
-  const displayAttendees = () => {
-    getEventAttendees().then(setEventAttendees);
+  const leave = () => {
+    leaveEvent(id, user.uid).then(() => {
+      onUpdate();
+      updateEventAttendees();
+    });
   };
 
-  useEffect(() => {
-    displayAttendees();
-  });
-  console.warn(eventAttendees);
+  const join = () => {
+    joinEvent(id, user.uid).then(() => {
+      updateEventAttendees();
+    });
+  };
 
   const deleteThisevent = () => {
     if (window.confirm('Delete your Event?')) {
@@ -137,12 +136,13 @@ function EventDetails({ onUpdate }) {
               Join
             </Button>
           )}
+
           {/* Display event attendees */}
           <div>
             <h4>Event Attendees:</h4>
             <ul>
               {eventAttendees.map((attendee) => (
-                <li key={attendee.id}>{attendee.attendee.name}</li>
+                <li key={attendee.id}>{attendee?.attendee.name}</li>
               ))}
             </ul>
           </div>
