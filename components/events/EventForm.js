@@ -2,6 +2,10 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable no-tabs */
 /* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/jsx-no-duplicate-props */
+/* eslint-disable no-mixed-spaces-and-tabs */
+/* eslint-disable no-tabs */
+/* eslint-disable react/forbid-prop-types */
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
@@ -77,7 +81,7 @@ const EventForm = ({ obj }) => {
         location: currentEvent.location,
         date: currentEvent.date,
         time: currentEvent.time,
-        organizer: user.id,
+        organizer: obj.id,
         is_public: currentEvent.is_public,
         canceled: currentEvent.canceled,
       };

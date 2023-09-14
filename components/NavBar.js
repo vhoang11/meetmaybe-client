@@ -31,11 +31,6 @@ export default function NavBar() {
         <Link passHref href="/profile">
           <Nav.Link><BsPerson size={25} /></Nav.Link>
         </Link>
-        {/* <Button variant="danger" onClick={signOut}>
-          Sign Out
-        </Button> */}
-        {/* </Nav>
-        {/* </Navbar.Collapse> */}
       </Container>
     </Navbar>
   );
