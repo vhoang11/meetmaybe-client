@@ -1,10 +1,10 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import { useAuth } from '../../utils/context/authContext';
 import {
   deleteEvent, getSingleEvent, joinEvent, leaveEvent,
@@ -12,7 +12,7 @@ import {
 import { getSingleUser } from '../../utils/data/userData';
 import getEventAttendees from '../../utils/data/eventAttendeeData';
 
-function EventDetails({ onUpdate }) {
+function EventDetails() {
   const [event, setEvent] = useState({});
   const [organizer, setOrganizer] = useState('');
   const [invitee, setInvited] = useState('');
@@ -32,6 +32,7 @@ function EventDetails({ onUpdate }) {
       setEvent(eventData);
       setOrganizer(user.id);
       getSingleUser(eventData.invitee.id).then(setInvited);
+      getEventAttendees(id).then(setEventAttendees);
     });
 
     // Fetch event attendees for public events
@@ -42,7 +43,6 @@ function EventDetails({ onUpdate }) {
 
   const leave = () => {
     leaveEvent(id, user.uid).then(() => {
-      onUpdate();
       updateEventAttendees();
     });
   };
@@ -52,6 +52,7 @@ function EventDetails({ onUpdate }) {
       updateEventAttendees();
     });
   };
+  console.warn(eventAttendees);
 
   const deleteThisevent = () => {
     if (window.confirm('Delete your Event?')) {
@@ -60,27 +61,27 @@ function EventDetails({ onUpdate }) {
   };
 
   return (
-    <div className="mt-5" id="event-page">
+    <div id="event-page">
 
-      <div className="d-flex flex-column">
-        <img src={event.image_url} alt={event.title} style={{ width: '30rem', margin: '75px' }} />
+      <div className="text-center d-flex flex-column justify-content-center align-content-center">
+        <img src={event.image_url} alt={event.title} style={{ width: '265px', margin: '50px' }} />
       </div>
-      <div className="text-grey ms-5 details" style={{ marginTop: '80px', width: '600px' }}>
+      <div className="text-grey ms-5 details">
         <h2>
           Title: {event.title}
         </h2>
-        <hr style={{ width: '525px' }} />
+        <hr style={{ width: '100%' }} />
         <h5 style={{
           marginTop: '20px', marginBottom: '20px', color: 'red', fontStyle: 'bold',
         }}
-        >{event.organizer === user.id && event.invitee === user.id && event.canceled === true ? 'Canceled' : ''}
+        >{event.organizer === user.id && event.invitee === user.id && (event.canceledByOrganizer === true && event.canceledByInvitee === true) ? 'Canceled' : ''}
           {/* { (event.organizer === user.id || event.invitee === user.id) && event.canceled === true ? 'Cancel Pending' : '' } */}
         </h5>
-        <h4 style={{ marginTop: '20px', marginBottom: '20px' }}>Organizer: {event?.organizer?.name}</h4>
-        <h4 style={{ marginTop: '20px', marginBottom: '20px' }}>Date: {event.date}</h4>
-        <h4 style={{ marginTop: '20px', marginBottom: '20px' }}>Time: {event.time}</h4>
-        <h4 style={{ marginTop: '20px', marginBottom: '20px' }}>Invitee: {event?.invitee?.name}</h4>
-        <h5 style={{ marginTop: '20px', marginBottom: '20px' }}>{event.is_public === true ? 'Public' : '' }</h5>
+        <p style={{ marginTop: '20px', marginBottom: '20px' }}>Organizer: {event?.organizer?.name}</p>
+        <p style={{ marginTop: '20px', marginBottom: '20px' }}>Date: {event.date}</p>
+        <p style={{ marginTop: '20px', marginBottom: '20px' }}>Time: {event.time}</p>
+        <p style={{ marginTop: '20px', marginBottom: '20px' }}>Invitee: {event?.invitee?.name}</p>
+        <p style={{ marginTop: '20px', marginBottom: '20px' }}>{event.is_public === true ? 'Public' : '' }</p>
         <p style={{ marginTop: '10px', marginBottom: '10px' }}>{event.description}</p>
 
         {organizer === user.id
@@ -88,7 +89,7 @@ function EventDetails({ onUpdate }) {
             <>
               <Button
                 style={{
-                  margin: '10px', backgroundColor: '#6699CC', fontSize: '10px', width: '90px',
+                  margin: '10px', backgroundColor: '#6699CC', fontSize: '10px', width: '70px',
                 }}
                 onClick={deleteThisevent}
               >
@@ -97,7 +98,7 @@ function EventDetails({ onUpdate }) {
             </>
           ) : ''}
 
-        {organizer === user.id || invitee === user.id // Change to logical OR
+        {organizer === user.id || invitee === user.id
           ? (
             <>
               <Button
@@ -115,12 +116,12 @@ function EventDetails({ onUpdate }) {
 
         {event.is_public && (
         <>
-          {eventAttendees.some((attendee) => attendee.uid === user.uid) ? (
+          {eventAttendees.some((attendee) => attendee.attendee.uid === user.uid) ? (
             <Button
               className="btn-danger"
               onClick={leave}
               style={{
-                margin: '10px', backgroundColor: '#6699CC', fontSize: '10px', width: '90px',
+                margin: '10px', backgroundColor: '#6699CC', fontSize: '10px', width: '70px',
               }}
             >
               Leave
@@ -130,19 +131,18 @@ function EventDetails({ onUpdate }) {
               className="btn-success"
               onClick={join}
               style={{
-                margin: '10px', backgroundColor: '#6699CC', fontSize: '10px', width: '90px',
+                margin: '10px', backgroundColor: '#6699CC', fontSize: '10px', width: '70px',
               }}
             >
-              Join
+              {eventAttendees.some((attendee) => attendee.uid === user.uid) ? 'Leave' : 'Join'}
             </Button>
           )}
-
           {/* Display event attendees */}
           <div>
             <h4>Event Attendees:</h4>
             <ul>
               {eventAttendees.map((attendee) => (
-                <li key={attendee.id}>{attendee?.attendee.name}</li>
+                <li key={attendee.id}>{attendee.attendee.name}</li>
               ))}
             </ul>
           </div>
@@ -153,8 +153,8 @@ function EventDetails({ onUpdate }) {
   );
 }
 
-EventDetails.propTypes = {
-  onUpdate: PropTypes.func.isRequired,
-};
+// EventDetails.propTypes = {
+//   onUpdate: PropTypes.func.isRequired,
+// };
 
 export default EventDetails;

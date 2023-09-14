@@ -2,8 +2,8 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { clientCredentials } from '../client';
 
-const getEventAttendees = () => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/eventattendees`, {
+const getEventAttendees = (id) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/eventattendees?event_id=${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
