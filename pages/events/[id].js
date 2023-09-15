@@ -74,7 +74,7 @@ function EventDetails() {
         <h5 style={{
           marginTop: '20px', marginBottom: '20px', color: 'red', fontStyle: 'bold',
         }}
-        >{event.organizer === user.id && event.invitee === user.id && (event.canceledByOrganizer === true && event.canceledByInvitee === true) ? 'Canceled' : ''}
+        >{event.organizer_canceled === true && event.invitee_canceled === true ? 'Canceled' : ''}
           {/* { (event.organizer === user.id || event.invitee === user.id) && event.canceled === true ? 'Cancel Pending' : '' } */}
         </h5>
         <p style={{ marginTop: '20px', marginBottom: '20px' }}>Organizer: {event?.organizer?.name}</p>
