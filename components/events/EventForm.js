@@ -84,7 +84,7 @@ const EventForm = ({ obj }) => {
         location: currentEvent.location,
         date: currentEvent.date,
         time: currentEvent.time,
-        organizer: obj.id,
+        organizer: obj.organizer.id,
         is_public: currentEvent.is_public,
         organizer_canceled: currentEvent.organizer_canceled,
         invitee_canceled: currentEvent.invitee_canceled,
