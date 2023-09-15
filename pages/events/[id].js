@@ -30,7 +30,8 @@ function EventDetails() {
   useEffect(() => {
     getSingleEvent(id).then((eventData) => {
       setEvent(eventData);
-      setOrganizer(user.id);
+      setOrganizer(eventData.organizer.id);
+      // setInvited(eventData.invitee.id);
       getSingleUser(eventData.invitee.id).then(setInvited);
       getEventAttendees(id).then(setEventAttendees);
     });
@@ -70,21 +71,20 @@ function EventDetails() {
         <h2>
           Title: {event.title}
         </h2>
-        <hr style={{ width: '100%' }} />
+        <hr style={{ width: '270px' }} />
         <h5 style={{
           marginTop: '20px', marginBottom: '20px', color: 'red', fontStyle: 'bold',
         }}
         >{event.organizer_canceled === true && event.invitee_canceled === true ? 'Canceled' : ''}
-          {/* { (event.organizer === user.id || event.invitee === user.id) && event.canceled === true ? 'Cancel Pending' : '' } */}
         </h5>
         <p style={{ marginTop: '20px', marginBottom: '20px' }}>Organizer: {event?.organizer?.name}</p>
         <p style={{ marginTop: '20px', marginBottom: '20px' }}>Date: {event.date}</p>
         <p style={{ marginTop: '20px', marginBottom: '20px' }}>Time: {event.time}</p>
         <p style={{ marginTop: '20px', marginBottom: '20px' }}>Invitee: {event?.invitee?.name}</p>
-        <p style={{ marginTop: '20px', marginBottom: '20px' }}>{event.is_public === true ? 'Public' : '' }</p>
         <p style={{ marginTop: '10px', marginBottom: '10px' }}>{event.description}</p>
+        <p style={{ marginTop: '20px', marginBottom: '20px' }}>{event.is_public === true ? 'Public' : '' }</p>
 
-        {organizer === user.id
+        {user.id !== organizer.id
           ? (
             <>
               <Button
@@ -98,7 +98,7 @@ function EventDetails() {
             </>
           ) : ''}
 
-        {organizer === user.id || invitee === user.id
+        {user.id !== organizer.id || user.id === invitee.id
           ? (
             <>
               <Button

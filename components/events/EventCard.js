@@ -18,6 +18,8 @@ const EventCard = ({
   time,
   joined,
   is_public,
+  organizer_canceled,
+  invitee_canceled,
   onUpdate,
 }) => {
   const { user } = useAuth();
@@ -31,7 +33,7 @@ const EventCard = ({
   // };
   const router = useRouter();
   return (
-    <Card className="text-center" style={{ width: '300px', marginBottom: '20px', height: '300px' }}>
+    <Card className="text-center" style={{ width: '300px', marginBottom: '20px', height: '340px' }}>
       <Card.Header>Event: {title}</Card.Header>
       <Card.Body>
         <div>
@@ -39,10 +41,15 @@ const EventCard = ({
             src={image_url}
             alt={title}
             style={{
-              width: '200px', marginBottom: '10px',
+              width: '250px',
             }}
           />
         </div>
+        <h5 style={{
+          marginTop: '20px', marginBottom: '20px', color: 'red', fontStyle: 'bold',
+        }}
+        >{organizer_canceled === true && invitee_canceled === true ? 'Canceled' : ''}
+        </h5>
         <Card.Text style={{ margin: '5px', fontSize: '12px' }}>Date: {date}</Card.Text>
         <Card.Text style={{ marginTop: '5px', fontSize: '12px' }}>Time: {time}</Card.Text>
       </Card.Body>
@@ -89,6 +96,8 @@ EventCard.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   joined: PropTypes.bool.isRequired,
   is_public: PropTypes.bool.isRequired,
+  organizer_canceled: PropTypes.bool.isRequired,
+  invitee_canceled: PropTypes.bool.isRequired,
 };
 
 export default EventCard;
