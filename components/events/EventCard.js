@@ -46,7 +46,7 @@ const EventCard = ({
           />
         </div>
         <h5 style={{
-          marginTop: '20px', marginBottom: '20px', color: 'red', fontStyle: 'bold',
+          marginTop: '5px', marginBottom: '5px', color: 'red', fontStyle: 'bold', fontSize: '12',
         }}
         >{organizer_canceled === true && invitee_canceled === true ? 'Canceled' : ''}
         </h5>

@@ -53,7 +53,7 @@ function EventDetails() {
       updateEventAttendees();
     });
   };
-  console.warn(eventAttendees);
+  console.warn(event);
 
   const deleteThisevent = () => {
     if (window.confirm('Delete your Event?')) {
@@ -84,7 +84,7 @@ function EventDetails() {
         <p style={{ marginTop: '10px', marginBottom: '10px' }}>{event.description}</p>
         <p style={{ marginTop: '20px', marginBottom: '20px' }}>{event.is_public === true ? 'Public' : '' }</p>
 
-        {user.id !== organizer.id
+        {organizer.uid !== user.uid
           ? (
             <>
               <Button
@@ -98,7 +98,7 @@ function EventDetails() {
             </>
           ) : ''}
 
-        {user.id !== organizer.id || user.id === invitee.id
+        {user.uid !== organizer.uid || user.uid !== invitee.uid
           ? (
             <>
               <Button
