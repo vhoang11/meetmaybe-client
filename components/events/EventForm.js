@@ -117,7 +117,7 @@ const EventForm = ({ obj }) => {
         onSubmit={handleSubmit}
         className="text-center d-flex flex-column justify-content-center align-content-center"
         style={{
-          paddingTop: '100px',
+          paddingTop: '200px',
           margin: '0 auto',
         }}
       >
@@ -222,7 +222,7 @@ const EventForm = ({ obj }) => {
             name="organizer_canceled"
             label="Organizer Cancel"
             onChange={handleChange}
-            checked={currentEvent.organizer_canceled}
+            // checked={currentEvent.organizer_canceled}
           />
         </div>
         {/* )
@@ -235,7 +235,7 @@ const EventForm = ({ obj }) => {
             name="invitee_canceled"
             label="Invitee Cancel"
             onChange={handleChange}
-            checked={currentEvent.invitee_canceled}
+            // checked={currentEvent.invitee_canceled}
           />
         </div>
         {/* )} */}
