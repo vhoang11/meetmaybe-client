@@ -25,7 +25,8 @@ const initialState = {
   date: '',
   time: '',
   is_public: false,
-  canceled: false,
+  organizer_canceled: false,
+  invitee_canceled: false,
 };
 
 const EventForm = ({ obj }) => {
@@ -46,7 +47,8 @@ const EventForm = ({ obj }) => {
         date: obj.date,
         time: obj.time,
         is_public: obj.is_public,
-        canceled: obj.canceled,
+        organizer_canceled: obj.organizer_canceled,
+        invitee_canceled: obj.invitee_canceled,
       });
     }
   }, [obj, user]);
@@ -83,7 +85,8 @@ const EventForm = ({ obj }) => {
         time: currentEvent.time,
         organizer: obj.id,
         is_public: currentEvent.is_public,
-        canceled: currentEvent.canceled,
+        organizer_canceled: currentEvent.organizer_canceled,
+        invitee_canceled: currentEvent.invitee_canceled,
       };
       updateEvent(eventUpdate)
         .then(() => router.push(`/events/${obj.id}`));
@@ -98,7 +101,8 @@ const EventForm = ({ obj }) => {
         organizer: user.id,
         invitee: currentEvent.invitee,
         is_public: currentEvent.is_public,
-        canceled: currentEvent.canceled,
+        organizer_canceled: currentEvent.organizer_canceled,
+        invitee_canceled: currentEvent.invitee_canceled,
       };
       createEvent(event)
         .then((newEvent) => router.push(`/events/${newEvent.id}`));
@@ -209,9 +213,20 @@ const EventForm = ({ obj }) => {
           <Form.Check
             className="text-grey mb-3"
             type="switch"
-            id="canceled"
-            name="canceled"
-            label="Cancel"
+            id="organizer_canceled"
+            name="organizer_canceled"
+            label="Organizer Cancel"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="mb-4">
+          <Form.Check
+            className="text-grey mb-3"
+            type="switch"
+            id="invitee_canceled"
+            name="invitee_canceled"
+            label="Invitee Cancel"
             onChange={handleChange}
           />
         </div>
@@ -235,7 +250,8 @@ EventForm.propTypes = {
     date: PropTypes.number,
     time: PropTypes.number,
     is_public: PropTypes.bool,
-    canceled: PropTypes.bool,
+    organizer_canceled: PropTypes.bool,
+    invitee_canceled: PropTypes.bool,
   }),
 };
 
