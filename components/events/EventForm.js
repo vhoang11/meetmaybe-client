@@ -109,6 +109,7 @@ const EventForm = ({ obj }) => {
         .then((newEvent) => router.push(`/events/${newEvent.id}`));
     }
   };
+  console.warn(currentEvent);
 
   return (
     <>
@@ -211,7 +212,7 @@ const EventForm = ({ obj }) => {
           />
         </div>
 
-        {/* {obj.organizer === user.id
+        {/* {obj.organizer.id === user.id
           ? ( */}
         <div className="mb-4">
           <Form.Check

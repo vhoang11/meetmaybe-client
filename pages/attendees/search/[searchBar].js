@@ -2,8 +2,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { getUsers } from '../../utils/data/userData';
-import UserCard from '../../components/UserCard';
+import { getUsers } from '../../../utils/data/userData';
+import UserCard from '../../../components/UserCard';
 
 export default function SearchBar() {
   const [searchUsers, setSearchUsers] = useState([]);
@@ -25,6 +25,7 @@ export default function SearchBar() {
       setSearchUsers([]);
     };
   }, [searchBar]);
+  console.warn(setSearchUsers);
 
   return (
     <>

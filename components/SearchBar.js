@@ -13,7 +13,7 @@ export default function SearchBar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (setSearchBar !== '') router.push(`/searchbar/${searchBar}`);
+    if (setSearchBar !== '') router.push(`/attendees/search/${searchBar}`);
     setSearchBar('');
   };
 

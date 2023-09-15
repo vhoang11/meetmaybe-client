@@ -31,7 +31,7 @@ function EventDetails() {
     getSingleEvent(id).then((eventData) => {
       setEvent(eventData);
       setOrganizer(eventData.organizer.id);
-      setInvited(eventData.invitee.id);
+      // setInvited(eventData.invitee.id);
       getSingleUser(eventData.invitee.id).then(setInvited);
       getEventAttendees(id).then(setEventAttendees);
     });

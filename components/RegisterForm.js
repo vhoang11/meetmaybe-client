@@ -2,7 +2,9 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useRouter } from 'next/router';
 import { registerUser } from '../utils/auth'; // Update with path to registerUser
+import { createUser } from '../utils/data/userData';
 
 function RegisterForm({ user, updateUser }) {
   const [formData, setFormData] = useState({
@@ -13,6 +15,7 @@ function RegisterForm({ user, updateUser }) {
     bio: '',
     uid: user.uid,
   });
+  const router = useRouter();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,6 +31,7 @@ function RegisterForm({ user, updateUser }) {
     const updatedFormData = { ...formData, created_on: currentDate };
     registerUser(updatedFormData)
       .then(() => updateUser(user.uid));
+    createUser(formData).then((newUser) => router.push(`/users/${newUser.id}`));
   };
 
   return (

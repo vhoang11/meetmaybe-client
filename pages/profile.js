@@ -57,7 +57,7 @@ const Profile = () => {
       <div style={{ marginTop: '5px' }}>
         <h1>{user.name}</h1>
         <h4>@{user.username}</h4>
-        <h4>{user.email}</h4>
+        <p>{user.email}</p>
         <p>Bio: {user.bio}</p>
         {/* <Button
           onClick={() => {

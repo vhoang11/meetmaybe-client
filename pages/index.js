@@ -40,7 +40,7 @@ function Home() {
         className="text-center d-flex flex-column justify-content-center align-content-center"
         style={{
           padding: '30px',
-          maxWidth: '400px',
+          maxWidth: '390px',
           margin: '0 auto',
         }}
       >
