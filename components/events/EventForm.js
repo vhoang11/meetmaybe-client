@@ -42,6 +42,7 @@ const EventForm = ({ obj }) => {
         title: obj.title,
         image_url: obj.image_url,
         description: obj.description,
+        organizer: obj.organizer,
         invitee: obj.invitee,
         location: obj.location,
         date: obj.date,
@@ -206,9 +207,12 @@ const EventForm = ({ obj }) => {
             name="is_public"
             label="Public Event"
             onChange={handleChange}
+            checked={currentEvent.is_public}
           />
         </div>
 
+        {/* {obj.organizer === user.id
+          ? ( */}
         <div className="mb-4">
           <Form.Check
             className="text-grey mb-3"
@@ -217,9 +221,11 @@ const EventForm = ({ obj }) => {
             name="organizer_canceled"
             label="Organizer Cancel"
             onChange={handleChange}
+            checked={currentEvent.organizer_canceled}
           />
         </div>
-
+        {/* )
+          : ( */}
         <div className="mb-4">
           <Form.Check
             className="text-grey mb-3"
@@ -228,9 +234,10 @@ const EventForm = ({ obj }) => {
             name="invitee_canceled"
             label="Invitee Cancel"
             onChange={handleChange}
+            checked={currentEvent.invitee_canceled}
           />
         </div>
-
+        {/* )} */}
         <Button type="submit" style={{ backgroundColor: '#6699CC', marginBottom: '20px' }}>
           Submit
         </Button>
@@ -245,6 +252,7 @@ EventForm.propTypes = {
     title: PropTypes.string,
     image_url: PropTypes.string,
     description: PropTypes.string,
+    organizer: PropTypes.object,
     invitee: PropTypes.object,
     location: PropTypes.string,
     date: PropTypes.number,

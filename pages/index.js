@@ -46,7 +46,7 @@ function Home() {
       >
 
         <div>
-          <h2 style={{ marginTop: '20px' }}>Your Events</h2>
+          <h2 style={{ marginTop: '10px' }}>Your Events</h2>
         </div>
 
         <div className="text-center my-4" id="events-section">
@@ -82,7 +82,7 @@ function Home() {
         </div>
 
         <div>
-          <h2 style={{ marginTop: '20px' }}>Public Events</h2>
+          <h2 style={{ marginTop: '10px', marginBottom: '20px' }}>Public Events</h2>
           <div>
             {/* Display only public events */}
             {publicEvents.length === 0 ? (
