@@ -80,7 +80,7 @@ const EventForm = ({ obj }) => {
         title: currentEvent.title,
         image_url: currentEvent.image_url,
         description: currentEvent.description,
-        invitee: obj.invitee,
+        invitee: currentEvent.invitee,
         location: currentEvent.location,
         date: currentEvent.date,
         time: currentEvent.time,
