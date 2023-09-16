@@ -139,7 +139,7 @@ function EventDetails() {
           )}
           {/* Display event attendees */}
           <div>
-            <h4>Event Attendees:</h4>
+            <h4 style={{ margin: '10px' }}>Event Attendees:</h4>
             <ul>
               {eventAttendees.map((attendee) => (
                 <li key={attendee.id}>{attendee.attendee.name}</li>
