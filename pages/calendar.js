@@ -23,19 +23,18 @@ const localizer = dateFnsLocalizer({
 const events = [
   {
     title: 'Big Meeting',
-    allDay: true,
-    start: new Date(2021, 6, 0),
-    end: new Date(2021, 6, 0),
+    start: new Date(2021, 6, 1, 10, 0), // July 1, 2021, 10:00 AM
+    end: new Date(2021, 6, 1, 12, 0), // July 1, 2021, 12:00 PM
   },
   {
     title: 'Vacation',
-    start: new Date(2021, 6, 7),
-    end: new Date(2021, 6, 10),
+    start: new Date(2021, 6, 7, 14, 0), // July 7, 2021, 2:00 PM
+    end: new Date(2021, 6, 10, 12, 0), // July 10, 2021, 12:00 PM
   },
   {
     title: 'Conference',
-    start: new Date(2021, 6, 20),
-    end: new Date(2021, 6, 23),
+    start: new Date(2021, 6, 20, 9, 0), // July 20, 2021, 9:00 AM
+    end: new Date(2021, 6, 23, 17, 0), // July 23, 2021, 5:00 PM
   },
 ];
 
@@ -73,15 +72,39 @@ function App() {
       <h3 style={{ marginTop: '20px' }}>Calendar</h3>
       <h5>Add New Event</h5>
       <div>
-        <input type="text" placeholder="Add Title" style={{ width: '20%', marginRight: '10px' }} value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
+        <input
+          type="text"
+          placeholder="Add Title"
+          style={{ width: '20%', marginRight: '10px' }}
+          value={newEvent.title}
+          onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
+        />
 
-        <DatePicker placeholderText="Start Date" style={{ marginRight: '10px' }} selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
+        <DatePicker
+          placeholderText="Start Date and Time"
+          style={{ marginRight: '10px' }}
+          selected={newEvent.start}
+          onChange={(start) => setNewEvent({ ...newEvent, start })}
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          dateFormat="MMMM d, yyyy h:mm aa"
+        />
 
-        <DatePicker placeholderText="End Date" selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
+        <DatePicker
+          placeholderText="End Date and Time"
+          selected={newEvent.end}
+          onChange={(end) => setNewEvent({ ...newEvent, end })}
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          dateFormat="MMMM d, yyyy h:mm aa"
+        />
 
         <button type="button" style={{ marginTop: '10px' }} onClick={handleAddEvent}>
           Add Event
         </button>
+
       </div>
       <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: '50px' }} />
     </div>
